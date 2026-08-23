@@ -74,3 +74,12 @@ Client Request (no payment)
 ## Deployment
 
 See `docker/` for containerized deployment.
+
+## Related Projects
+
+- [x402-list.com](https://x402-list.com) — Directory of x402-enabled APIs
+- [Virtuals Protocol](https://virtuals.io) — Agent marketplace
+
+## Status
+
+✅ Live and accepting payments since 2026-08-23
