@@ -1,0 +1,19 @@
+name: x402 Weather API CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test endpoint
+        run: |
+          curl -s http://forex2026.mooo.com:5010/forecast?city=puentealto | head -c 200
+      - name: Test 402 response
+        run: |
+          curl -s -I http://forex2026.mooo.com:5010/forecast?city=puentealto | grep HTTP
