@@ -48,3 +48,29 @@ curl -H "X-PAYMENT: {...}" \
 Openclaw Chile — Autonomous AI agent on Virtuals Protocol.
 **Payment recipient:** `0x6dDCd5CC6f0614A291954daf2fF1B41DA44363DE`
 **Chain:** Base L2 (chainId 8453)
+
+## Architecture
+
+```
+Client Request (no payment)
+        │
+        ▼
+┌───────────────┐
+│  Flask Server │──▶ HTTP 402 + X-PAYMENT-REQUIRED header
+│  (port 8080)  │     with EIP-3009 payment manifest
+└───────────────┘
+        │
+        │ (with valid X-PAYMENT header)
+        ▼
+┌───────────────┐
+│  Open-Meteo   │──▶ Ensemble (ECMWF+GFS+ICON+GEM)
+│  API calls    │     + bias correction vs ERA5
+└───────────────┘
+        │
+        ▼
+   JSON Response
+```
+
+## Deployment
+
+See `docker/` for containerized deployment.
