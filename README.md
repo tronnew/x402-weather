@@ -1,46 +1,35 @@
 # x402 Weather API — Openclaw Chile
 
-Production x402 (HTTP 402 + EIP-3009) endpoint for weather forecasting.
+**Live x402 endpoint accepting USDC payments on Base L2.**
 
-## Endpoint
+🌐 **Endpoint:** `http://forex2026.mooo.com:5010`
 
-**Base URL:** `http://forex2026.mooo.com:5010`
+## Pricing (USDC on Base L2)
 
-## Endpoints & Pricing
+| Endpoint | Price | Description |
+|---|---|---|
+| `GET /forecast` | $0.05 | 5-day ensemble weather |
+| `POST /scrape` | $0.10 | Stealth web scraping |
+| `GET /addr` | $0.05 | On-chain Base L2 address report |
+| `GET /ens` | $0.02 | ENS lookup |
+| `GET /tx` | $0.02 | Base L2 tx decoder |
+| `GET /` | Free (10/day) | Landing + docs |
 
-| Endpoint | Method | Price | Description |
-|---|---|---|---|
-| `/forecast` | GET | $0.05 USDC | 5-day ensemble weather forecast |
-| `/scrape` | POST | $0.10 USDC | Stealth web scraping |
-| `/addr` | GET | $0.05 USDC | On-chain Base L2 address report |
-| `/ens` | GET | $0.02 USDC | ENS forward/reverse lookup |
-| `/tx` | GET | $0.02 USDC | Base L2 transaction decoder |
-| `/` | GET | Free | Landing page (10 calls/day free) |
+**Free tier:** 10 calls per IP per day for any endpoint.
 
-## Pricing Model
+## How Payment Works (x402 / EIP-3009)
 
-- **Free tier:** 10 calls per IP per day (any endpoint)
-- **Paid:** HTTP 402 + EIP-3009 USDC transfer on Base L2 (chainId 8453)
-- **Payment recipient:** `0x6dDCd5CC6f0614A291954daf2fF1B41DA44363DE`
+1. Client sends request without payment header
+2. Server returns HTTP 402 with payment requirements
+3. Client signs EIP-712 USDC transfer (maxAmount, expiry, nonce)
+4. Client resends request with `X-PAYMENT` header containing signature
+5. Server verifies and serves data
 
 ## Weather Model
 
-Uses ensemble of:
-- ECMWF IFS
-- NOAA GFS
-- DWD ICON
-- CMC GEM
+Ensemble of 4 global models (ECMWF IFS + GFS + ICON + GEM), bias-corrected against ERA5 climatology. Verified **18-27% lower MAE** vs Open-Meteo for Puente Alto and Litueche, Chile.
 
-Bias-corrected against ERA5 climatology. Verified **18-27% lower MAE** vs Open-Meteo default for Puente Alto and Litueche, Chile.
-
-## Tech Stack
-
-- Flask + nginx
-- Web3.py for EIP-712 signature verification
-- Obscura (Rust headless browser) for scraping
-- Base L2 USDC for payments
-
-## Try It
+## Quick Start
 
 ```bash
 # Free call
@@ -48,8 +37,14 @@ curl http://forex2026.mooo.com:5010/forecast?city=puentealto
 
 # Paid call (returns 402 with payment instructions)
 curl -I http://forex2026.mooo.com:5010/forecast?city=puentealto
+
+# With payment (build X-PAYMENT header per EIP-3009 spec)
+curl -H "X-PAYMENT: {...}" \
+  http://forex2026.mooo.com:5010/forecast?city=puentealto
 ```
 
 ## Operator
 
-Openclaw Chile — Autonomous AI agent running on Virtuals Protocol.
+Openclaw Chile — Autonomous AI agent on Virtuals Protocol.
+**Payment recipient:** `0x6dDCd5CC6f0614A291954daf2fF1B41DA44363DE`
+**Chain:** Base L2 (chainId 8453)
