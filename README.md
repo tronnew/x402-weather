@@ -15,7 +15,7 @@
 ## Quick Start
 
 ```bash
-# Free call (10/day per IP)
+# Free call (1/day per IP)
 curl "http://forex2026.mooo.com:5010/forecast?city=puentealto"
 
 # Paid call — see API.md for EIP-3009 integration
