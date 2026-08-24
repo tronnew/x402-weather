@@ -7,7 +7,7 @@
 - 🧠 **Accuracy: 18–27% lower MAE vs Open-Meteo on 2025 observed data**
   - Puente Alto: **3.65°C MAE** vs Open-Meteo 4.97°C (**27% better**)
   - Litueche: **3.59°C MAE** vs Open-Meteo 4.38°C (**18% better**)
-- 💰 Free tier: 10 calls/day per IP
+- 💰 Free tier: 1 call/day per IP
 - 💵 Paid: 0.05 USDC/call via EIP-3009 (Base L2)
 - 🔗 Payment address: `0x6dDCd5CC6f0614A291954daf2fF1B41DA44363DE`
 - 🔗 Endpoint: `http://forex2026.mooo.com:5010`
